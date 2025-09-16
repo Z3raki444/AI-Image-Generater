@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Image Generator</title>
-    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css"/>
-  </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Image Generator</title>
+
+  <!-- Font Awesome (needed for select chevron) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Your styles -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
 <body>
-  <div class = "container">
+  <div class="container">
     <header class="header">
       <div class="logo-wrapper">
         <div class="logo">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-
+          <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
         </div>
         <h1>AI Image Generator</h1>
       </div>
 
-      <button class="theme-toggle">
-        <i class="fa-solid fa-moon"></i>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
       </button>
     </header>
 
@@ -27,15 +30,14 @@
       <form action="#" class="prompt-form">
         <div class="prompt-container">
           <textarea class="prompt-input" placeholder="Describe your imagination in detail ..." required autofocus></textarea>
-          <button type="button" class="prompt-btn">
-            <i class="fa-solid fa-dice"></i>
+          <button type="button" class="prompt-btn" aria-label="Surprise me">
+            <i class="fa-solid fa-dice" aria-hidden="true"></i>
           </button>
         </div>
-      
-      
+
         <div class="prompt-actions">
           <div class="select-wrapper">
-            <select class="custom-select" required>
+            <select class="custom-select" required aria-label="Select model">
               <option value="" selected disabled>Select Model</option>
               <option value="black-forest-labs/FLUX.1-dev">FLUX.1-dev</option>
               <option value="black-forest-labs/FLUX.1-schnell">FLUX.1-schnell</option>
@@ -46,7 +48,7 @@
           </div>
 
           <div class="select-wrapper">
-            <select class="custom-select" required>
+            <select class="custom-select" required aria-label="Image count">
               <option value="" selected disabled>Image Count</option>
               <option value="1">1 Image</option>
               <option value="2">2 Images</option>
@@ -56,22 +58,21 @@
           </div>
 
           <div class="select-wrapper">
-            <select class="custom-select" required>
+            <select class="custom-select" required aria-label="Aspect ratio">
               <option value="" selected disabled>Aspect Ratio</option>
               <option value="1/1">Square (1:1)</option>
-              <option value="16/9">Landscape (16.9)</option>
-              <option value="9/16">Potrait</option>
+              <option value="16/9">Landscape (16:9)</option>
+              <option value="9/16">Portrait (9:16)</option>
             </select>
           </div>
 
           <button type="submit" class="generate-btn">
-            <i class="fa-solid fa fa-wand-magic-sparkles"></i>
-            Generate
+            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            <span>Generate</span>
           </button>
         </div>
       </form>
     </div>
   </div>
-
 </body>
 </html>
