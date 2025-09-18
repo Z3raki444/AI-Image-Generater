@@ -19,6 +19,20 @@
   --color-gradient:linear-gradient(135deg,#5C56E1,#8B5CF6);
 }
 
+body.dark-theme {
+  --color-card:#1E293B;
+  --color-input:#141B2D;
+  --color-text:#F3F4F6;
+  --color-placeholder:#A3B6DC;
+  --color-border:#334155;
+
+  background:var(--color-card);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+}
+
 body{
   display:flex;
   align-items:center;
@@ -35,8 +49,10 @@ body{
   padding:32px;
   border-radius:23px;
   background:var(--color-card);
-  position:relative; /* for ::before accent bar */
+  position:relative;
 }
+
+body.dark-theme .container{ border:1px solid var(--color-border); }
 
 .container::before{
   content:"";
@@ -103,7 +119,7 @@ body{
 .main-content .prompt-container{
   width:100%;
   margin-bottom:20px;
-  position:relative; /* for absolute dice button */
+  position:relative;
 }
 
 .prompt-container .prompt-input{
@@ -112,17 +128,15 @@ body{
   line-height:1.6;
   font-size:1.05rem;
   min-height:120px;
-  padding:16px 52px 16px 20px; /* room for dice btn */
+  padding:16px 52px 16px 20px;
   border-radius:15px;
   color:var(--color-text);
-  background:var(--color-input); /* fixed */
+  background:var(--color-input);
   border:1px solid var(--color-border);
   transition:all .3s ease;
 }
 
-.prompt-container .prompt-input::placeholder{
-  color:var(--color-placeholder);
-}
+.prompt-container .prompt-input::placeholder{ color:var(--color-placeholder); }
 
 .prompt-container .prompt-input:focus{
   outline:none;
@@ -156,13 +170,10 @@ body{
   grid-template-columns:1.2fr 1fr 1.1fr 1fr;
 }
 
-.prompt-actions .select-wrapper{
-  position:relative;
-}
+.prompt-actions .select-wrapper{ position:relative; }
 
 .prompt-actions .select-wrapper::after{
-  /* Font Awesome chevron-down (solid) */
-  content:"\f078";
+  content:"\f078"; /* chevron-down */
   font-family:"Font Awesome 6 Free";
   font-weight:900;
   position:absolute;
@@ -189,6 +200,8 @@ body{
   outline:none;
   height:100%;
   appearance:none;
+  color:var(--color-text);
+  -webkit-appearance:none;
 }
 
 .prompt-actions .custom-select:is(:focus, :hover){
@@ -199,6 +212,7 @@ body{
 .prompt-actions .generate-btn{
   display:flex;
   gap:12px;
+  margin-left:auto;
   font-weight:500;
   align-items:center;
   justify-content:center;
@@ -214,7 +228,7 @@ body{
   box-shadow:0 4px 10px rgba(109,40,217,.3);
 }
 
-/* Accessibility touch-up */
+/* Accessibility */
 :focus-visible{
   outline:2px solid var(--color-accent);
   outline-offset:2px;
@@ -225,72 +239,121 @@ body{
   .main-content .prompt-actions{
     grid-template-columns:1fr;
   }
-  .header .logo-wrapper h1{
-    font-size:1.5rem;
-  }
+  .header .logo-wrapper h1{ font-size:1.5rem; }
 }
 
-
+/* ---- Gallery ---- */
 .main-content .gallery-grid{
-  display: grid;
-  gap: 15px;
-  margin-top: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display:grid;
+  gap:15px;
+  margin-top:30px;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .gallery-grid .img-card{
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1;
-  border-radius: 16px;
-  background: var(--color-input);
-  border: 1px solid var(--color-border);
-  transition: all .3s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:1;
+  border-radius:16px;
+  background:var(--color-input);
+  border:1px solid var(--color-border);
+  transition:all .3s ease;
 }
 
-.gallery-grid .img-card:hover{
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+.gallery-grid .img-card:not(.loading):hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .gallery-grid .img-card .result-img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Hide image & overlay while loading or error */
+.gallery-grid .img-card:is(.loading, .error) :is(.result-img, .img-overlay){
+  display:none;
 }
 
 .gallery-grid .img-card .img-overlay{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 20px;
-  display: flex;
-  opacity: 0;
-  justify-content: flex-end;
-  pointer-events: none;
-  transition: all .3s ease;
+  position:absolute;
+  inset:auto 0 0 0;
+  background:linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding:20px;
+  display:flex;
+  opacity:0;
+  justify-content:flex-end;
+  pointer-events:none;
+  transition:all .3s ease;
 }
 
 .gallery-grid .img-card:hover .img-overlay{
-  opacity: 1;
-  pointer-events: auto;
+  opacity:1;
+  pointer-events:auto;
 }
 
 .gallery-grid .img-card .img-download-btn{
-  height: 45px; width: 45px;
-  color: #fff;
-  backdrop-filter: blur(5px);
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  background: rgba(255, 255, 255 , 0.25);
-  transition: all .3s ease; 
+  height:45px; width:45px;
+  color:#fff;
+  backdrop-filter:blur(5px);
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:rgba(255,255,255,0.25);
+  transition:all .3s ease;
 }
 
 .gallery-grid .img-card .img-download-btn:hover{
-  background: rgba(255, 255, 255 , 0.4);
-  transform: scale(1.05);
-  
+  background:rgba(255,255,255,0.4);
+  transform:scale(1.05);
+}
+
+/* Loading/Error visuals */
+.gallery-grid .img-card.loading{ display:grid; place-items:center; }
+
+.gallery-grid .img-card .status-container{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  padding:15px;
+  gap:13px;
+  text-align:center;
+}
+
+.gallery-grid .img-card.loading .status-container,
+.gallery-grid .img-card.error .status-container{
+  display:flex;
+}
+
+.gallery-grid .img-card.loading .spinner{
+  width:35px; height:35px;
+  border-radius:50%;
+  border:3px solid var(--color-border);
+  border-top-color:var(--color-primary);
+  animation:spin 1s linear infinite;
+}
+
+.gallery-grid .img-card.error .spinner{ display:none; }
+
+.gallery-grid .img-card.error .status-container i{
+  display:block;
+  font-size:1.7em;
+  color:#ef4444;
+}
+
+.gallery-grid .img-card .status-text{
+  font-size:0.95rem;
+  color:var(--color-placeholder);
+}
+
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important; }
 }
