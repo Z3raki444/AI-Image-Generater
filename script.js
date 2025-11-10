@@ -13,7 +13,7 @@ const hordeKeyEl   = document.getElementById('hordeKey');
 // ===== Stable Horde config =====
 const HORDE_BASE = "https://stablehorde.net/api/v2";
 const ANON_KEY   = "0000000000";
-const CLIENT_AGENT = "SumathyR-AIImageGen:1.0:email@example.com";
+const CLIENT_AGENT = "MyImageApp:1.0:contact@example.com";
 
 // --- Free-tier safe limits ---
 const SAFE_MAX_SIDE = 704;        // keep both W/H <= 704 to avoid upfront kudos
